@@ -59,7 +59,7 @@ namespace JavaToCSharp
                 var rootMembers = new List<MemberDeclarationSyntax>();
                 NamespaceDeclarationSyntax namespaceSyntax = null;
 
-                if (options.IncludeNamespace)
+                if (options.IncludeNamespace && package != null)
                 {
                     string packageName = package.getName().toString();
 
@@ -92,7 +92,7 @@ namespace JavaToCSharp
                         {
                             var classSyntax = VisitClassDeclaration(context, classOrIntType, false);
 
-                            if (options.IncludeNamespace)
+                            if (options.IncludeNamespace && namespaceSyntax != null)
                                 namespaceSyntax = namespaceSyntax.AddMembers(classSyntax);
                             else
                                 rootMembers.Add(classSyntax);
@@ -100,7 +100,7 @@ namespace JavaToCSharp
                     }
                 }
 
-                if (options.IncludeNamespace)
+                if (options.IncludeNamespace && namespaceSyntax != null)
                     rootMembers.Add(namespaceSyntax);
 
                 var root = SyntaxFactory.CompilationUnit(
@@ -257,13 +257,8 @@ namespace JavaToCSharp
                 }
             }
 
-            var comment = javac.getComment();
-            if (comment != null)
-            {
-                classSyntax = classSyntax.WithLeadingTrivia(SyntaxFactory.Comment(comment.toString()));
-            }
-
-            return classSyntax;
+            var classDeclarationSyntax = classSyntax.AddComments(context, javac);
+            return classDeclarationSyntax;
         }
    
         

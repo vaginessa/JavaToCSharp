@@ -47,7 +47,8 @@ namespace JavaToCSharp.Statements
                 }
             }
 
-            return SyntaxFactory.SwitchStatement(selectorSyntax, SyntaxFactory.List<SwitchSectionSyntax>(caseSyntaxes));
+            var statementSyntax = SyntaxFactory.SwitchStatement(selectorSyntax, SyntaxFactory.List<SwitchSectionSyntax>(caseSyntaxes));
+            return statementSyntax;
         }
     }
 }

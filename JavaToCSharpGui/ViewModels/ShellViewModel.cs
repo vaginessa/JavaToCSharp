@@ -22,6 +22,7 @@ namespace JavaToCSharpGui
         private bool _includeUsings = true;
         private bool _includeNamespace = true;
         private bool _useDebugAssertForAsserts;
+        private bool _includeComments = true;
 
         public ShellViewModel()
         {
@@ -29,6 +30,7 @@ namespace JavaToCSharpGui
 
             _includeUsings = Properties.Settings.Default.UseUsingsPreference;
             _includeNamespace = Properties.Settings.Default.UseNamespacePreference;
+            _includeComments = Properties.Settings.Default.UseCommentPreference;
             _useDebugAssertForAsserts = Properties.Settings.Default.UseDebugAssertPreference;
         }
 
@@ -117,6 +119,17 @@ namespace JavaToCSharpGui
                 Properties.Settings.Default.Save();
             }
         }
+        public bool IncludeComments
+        {
+            get { return _includeComments; }
+            set
+            {
+                _includeComments = value;
+                NotifyOfPropertyChange(() => IncludeComments);
+                Properties.Settings.Default.UseCommentPreference = value;
+                Properties.Settings.Default.Save();
+            }
+        }
 
         public bool UseDebugAssertForAsserts
         {
@@ -159,6 +172,7 @@ namespace JavaToCSharpGui
 
             options.IncludeUsings = _includeUsings;
             options.IncludeNamespace = _includeNamespace;
+            options.IncludeComments = _includeComments;
             options.UseDebugAssertForAsserts = _useDebugAssertForAsserts;
 
             options.WarningEncountered += options_WarningEncountered;

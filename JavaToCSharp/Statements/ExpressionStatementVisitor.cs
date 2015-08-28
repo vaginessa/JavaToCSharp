@@ -55,8 +55,9 @@ namespace JavaToCSharp.Statements
                     variables.Add(SyntaxFactory.VariableDeclarator(name));
             }
 
-            return SyntaxFactory.LocalDeclarationStatement(
+            var statementSyntax = SyntaxFactory.LocalDeclarationStatement(
                 SyntaxFactory.VariableDeclaration(SyntaxFactory.ParseTypeName(type), SyntaxFactory.SeparatedList(variables, Enumerable.Repeat(SyntaxFactory.Token(SyntaxKind.CommaToken), variables.Count - 1))));
+            return statementSyntax;
         }
     }
 }

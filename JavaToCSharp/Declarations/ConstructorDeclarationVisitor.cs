@@ -97,14 +97,8 @@ namespace JavaToCSharp.Declarations
 
             ctorSyntax = ctorSyntax.AddBodyStatements(statementSyntax.ToArray());
 
-            var comment = ctorDecl.getComment();
-            if (comment != null)
-            {
-                var trivia = CommentVisitor.VisitComment(context, comment);
-                ctorSyntax = ctorSyntax.WithLeadingTrivia(trivia);
-            }
-
-            return ctorSyntax;
+            var constructorDeclarationSyntax = ctorSyntax.AddComments(context, ctorDecl);
+            return constructorDeclarationSyntax;
         }
 
         public override MemberDeclarationSyntax VisitForInterface(ConversionContext context, InterfaceDeclarationSyntax interfaceSyntax, ConstructorDeclaration declaration)

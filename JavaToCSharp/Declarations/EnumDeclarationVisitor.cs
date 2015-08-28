@@ -25,14 +25,7 @@ namespace JavaToCSharp.Declarations
                 // TODO: support "equals" value
                 var memberSyntax = SyntaxFactory.EnumMemberDeclaration(entry.getName());
 
-                var memberComment = entry.getComment();
-                if (memberComment != null)
-                {
-                    var trivia = CommentVisitor.VisitComment(context, memberComment);
-                    memberSyntax = memberSyntax.WithLeadingTrivia(trivia);
-                }
-
-                memberSyntaxes.Add(memberSyntax);
+                memberSyntaxes.Add(memberSyntax.AddComments(context, enumDecl));
             }
 
             if (members != null && members.Count > 0)
@@ -50,14 +43,8 @@ namespace JavaToCSharp.Declarations
             if (mods.HasFlag(Modifier.PUBLIC))
                 enumSyntax = enumSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
 
-            var comment = enumDecl.getComment();
-            if (comment != null)
-            {
-                var trivia = CommentVisitor.VisitComment(context, comment);
-                enumSyntax = enumSyntax.WithLeadingTrivia(trivia);
-            }
-
-            return enumSyntax;
+            var memberDeclarationSyntax = enumSyntax.AddComments(context, enumDecl);
+            return memberDeclarationSyntax;
         }
 
         public override MemberDeclarationSyntax VisitForInterface(ConversionContext context, InterfaceDeclarationSyntax interfaceSyntax, EnumDeclaration declaration)

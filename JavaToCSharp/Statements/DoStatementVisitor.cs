@@ -15,7 +15,8 @@ namespace JavaToCSharp.Statements
             var body = statement.getBody();
             var bodySyntax = StatementVisitor.VisitStatement(context, body);
 
-            return SyntaxFactory.DoStatement(bodySyntax, conditionSyntax);
+            var statementSyntax = SyntaxFactory.DoStatement(bodySyntax, conditionSyntax);
+            return statementSyntax;
         }
     }
 }

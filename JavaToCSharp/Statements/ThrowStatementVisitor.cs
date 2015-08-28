@@ -13,7 +13,8 @@ namespace JavaToCSharp.Statements
 
             var exprSyntax = ExpressionVisitor.VisitExpression(context, expr);
 
-            return SyntaxFactory.ThrowStatement(exprSyntax);
+            var statementSyntax = SyntaxFactory.ThrowStatement(exprSyntax).AddComments(context, throwStmt);
+            return statementSyntax;
         }
     }
 }

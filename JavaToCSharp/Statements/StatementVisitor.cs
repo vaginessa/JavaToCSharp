@@ -12,7 +12,7 @@ namespace JavaToCSharp.Statements
 
         protected sealed override StatementSyntax Visit(ConversionContext context, Statement statement)
         {
-            return Visit(context, (T)statement);
+            return Visit(context, (T)statement).AddComments(context, statement);
         }
     }
 
@@ -59,7 +59,10 @@ namespace JavaToCSharp.Statements
                 var syntax = VisitStatement(context, statement);
 
                 if (syntax != null)
+                {
+                    syntax = syntax.AddComments(context, statement);
                     syntaxes.Add(syntax);
+                }
             }
 
             return syntaxes;

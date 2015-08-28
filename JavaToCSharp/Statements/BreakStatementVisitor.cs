@@ -11,7 +11,8 @@ namespace JavaToCSharp.Statements
             if (!string.IsNullOrEmpty(brk.getId()))
                 context.Options.Warning("Break with label detected, using plain break instead. Check for correctness.", brk.getBegin().line);
 
-            return SyntaxFactory.BreakStatement();
+            var statementSyntax = SyntaxFactory.BreakStatement();
+            return statementSyntax;
         }
     }
 }

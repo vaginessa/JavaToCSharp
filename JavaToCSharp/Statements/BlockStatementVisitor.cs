@@ -12,7 +12,8 @@ namespace JavaToCSharp.Statements
 
             var syntaxes = StatementVisitor.VisitStatements(context, stmts);
 
-            return SyntaxFactory.Block(syntaxes);
+            var statementSyntax = SyntaxFactory.Block(syntaxes);
+            return statementSyntax;
         }
     }
 }

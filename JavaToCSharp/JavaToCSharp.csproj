@@ -241,6 +241,7 @@
     <Compile Include="Statements\ThrowStatementVisitor.cs" />
     <Compile Include="Statements\TryStatementVisitor.cs" />
     <Compile Include="Statements\WhileStatementVisitor.cs" />
+    <Compile Include="SyntaxNodeExtensions.cs" />
     <Compile Include="TypeHelper.cs" />
   </ItemGroup>
   <ItemGroup>

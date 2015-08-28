@@ -18,7 +18,8 @@ namespace JavaToCSharp.Statements
             if (bodySyntax == null)
                 return null;
 
-            return SyntaxFactory.LockStatement(lockSyntax, bodySyntax);
+            var statementSyntax = SyntaxFactory.LockStatement(lockSyntax, bodySyntax);
+            return statementSyntax;
         }
     }
 }

@@ -14,7 +14,8 @@ namespace JavaToCSharp.Statements
             if (syntax == null)
                 return null;
 
-            return SyntaxFactory.LabeledStatement(labeledStmt.getLabel(), syntax);
+            var statementSyntax = SyntaxFactory.LabeledStatement(labeledStmt.getLabel(), syntax);
+            return statementSyntax;
         }
     }
 }

@@ -28,7 +28,8 @@ namespace JavaToCSharp.Statements
             if (bodySyntax == null)
                 return null;
 
-            return SyntaxFactory.ForEachStatement(SyntaxFactory.ParseTypeName(type), vars[0].Identifier.ValueText, iterableSyntax, bodySyntax);
+            var statementSyntax = SyntaxFactory.ForEachStatement(SyntaxFactory.ParseTypeName(type), vars[0].Identifier.ValueText, iterableSyntax, bodySyntax);
+            return statementSyntax;
         }
     }
 }

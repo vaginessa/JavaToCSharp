@@ -29,7 +29,8 @@ namespace JavaToCSharp.Statements
             if (elseSyntax == null)
                 return SyntaxFactory.IfStatement(conditionSyntax, thenSyntax);
 
-            return SyntaxFactory.IfStatement(conditionSyntax, thenSyntax, elseSyntax);
+            var statementSyntax = SyntaxFactory.IfStatement(conditionSyntax, thenSyntax, elseSyntax);
+            return statementSyntax;
         }
     }
 }

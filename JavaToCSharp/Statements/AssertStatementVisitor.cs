@@ -28,10 +28,11 @@ namespace JavaToCSharp.Statements
 
             var messageSyntax = ExpressionVisitor.VisitExpression(context, message);
 
-            return SyntaxFactory.ExpressionStatement(
-                    SyntaxFactory.InvocationExpression(
-                        SyntaxFactory.IdentifierName("Debug.Assert"),
-                        SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(checkSyntax), SyntaxFactory.Argument(messageSyntax) }, new[] { SyntaxFactory.Token(SyntaxKind.CommaToken) }))));
+            var statementSyntax = SyntaxFactory.ExpressionStatement(
+                SyntaxFactory.InvocationExpression(
+                    SyntaxFactory.IdentifierName("Debug.Assert"),
+                    SyntaxFactory.ArgumentList(SyntaxFactory.SeparatedList(new[] { SyntaxFactory.Argument(checkSyntax), SyntaxFactory.Argument(messageSyntax) }, new[] { SyntaxFactory.Token(SyntaxKind.CommaToken) }))));
+            return statementSyntax;
         }
     }
 }

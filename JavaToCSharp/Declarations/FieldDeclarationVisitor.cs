@@ -66,14 +66,8 @@ namespace JavaToCSharp.Declarations
             if (mods.HasFlag(Modifier.VOLATILE))
                 fieldSyntax = fieldSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.VolatileKeyword));
 
-            var comment = fieldDecl.getComment();
-            if (comment != null)
-            {
-                var trivia = CommentVisitor.VisitComment(context, comment);
-                fieldSyntax = fieldSyntax.WithLeadingTrivia(trivia);
-            }
-
-            return fieldSyntax;
+            var fieldDeclarationSyntax = fieldSyntax.AddComments(context, fieldDecl);
+            return fieldDeclarationSyntax;
         }
 
         public override MemberDeclarationSyntax VisitForInterface(ConversionContext context, InterfaceDeclarationSyntax interfaceSyntax, FieldDeclaration declaration)

@@ -9,7 +9,6 @@ using JavaToCSharp.Statements;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
-using Parameter = com.github.javaparser.ast.body.Parameter;
 
 namespace JavaToCSharp.Declarations
 {
@@ -24,29 +23,6 @@ namespace JavaToCSharp.Declarations
             methodName = TypeHelper.ReplaceCommonMethodNames(methodName);
 
             var methodSyntax = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(returnTypeName), methodName);
-            
-            //var documentationComment = SyntaxFactory.DocumentationComment(
-            //    SyntaxFactory.XmlSummaryElement(
-            //        SyntaxFactory.XmlNewLine("\r\n"),
-            //        SyntaxFactory.XmlText("This class provides extension methods for the "),
-            //        SyntaxFactory.XmlSeeElement(
-            //            SyntaxFactory.TypeCref(SyntaxFactory.ParseTypeName("TypeName"))
-            //        ),
-            //        SyntaxFactory.XmlText(" class."),
-            //        SyntaxFactory.XmlNewLine("\r\n")
-            //    ),
-            //    SyntaxFactory.XmlNewLine("\r\n"),
-            //    SyntaxFactory.XmlThreadSafetyElement(),
-            //    SyntaxFactory.XmlNewLine("\r\n"),
-            //    SyntaxFactory.XmlPreliminaryElement()
-            //);
-
-            //var stuff = SyntaxFactory.ParseLeadingTrivia("/// <summary>Foo</summary>\r\n");
-
-
-            //methodSyntax = methodSyntax.WithLeadingTrivia(SyntaxFactory.TriviaList(SyntaxFactory.Trivia(documentationComment)));
-            //methodSyntax = methodSyntax.WithLeadingTrivia(stuff);
-
 
             var mods = methodDecl.getModifiers();
 
@@ -87,8 +63,6 @@ namespace JavaToCSharp.Declarations
                 && !classSyntax.Modifiers.Any(i => i.Kind() == SyntaxKind.SealedKeyword))
                 methodSyntax = methodSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.VirtualKeyword));
 
-
-
             var parameters = methodDecl.getParameters().ToList<Parameter>();
 
             if (parameters != null && parameters.Count > 0)
@@ -107,7 +81,7 @@ namespace JavaToCSharp.Declarations
 
                     if (param.isVarArgs())
                         modifiers = SyntaxFactory.TokenList(SyntaxFactory.Token(SyntaxKind.ParamsKeyword));
-                    
+
                     var paramSyntax = SyntaxFactory.Parameter(
                         attributeLists: new SyntaxList<AttributeListSyntax>(),
                         modifiers: modifiers,
@@ -156,16 +130,12 @@ namespace JavaToCSharp.Declarations
                 methodSyntax = methodSyntax.AddBodyStatements(statementSyntax.ToArray());
             }
 
-            var comment = methodDecl.getComment();
-            if (comment != null)
-            {
-                var trivia = CommentVisitor.VisitComment(context, comment);
-                //methodSyntax = methodSyntax.WithLeadingTrivia(SyntaxFactory.Trivia(trivia));
-                methodSyntax = methodSyntax.WithLeadingTrivia(trivia);
-            }
+            methodSyntax = methodSyntax.AddComments(context, methodDecl);
 
             return methodSyntax;
         }
+
+        
 
         public override MemberDeclarationSyntax VisitForInterface(ConversionContext context, InterfaceDeclarationSyntax interfaceSyntax, MethodDeclaration methodDecl)
         {
@@ -199,3 +169,4 @@ namespace JavaToCSharp.Declarations
         }
     }
 }
+

@@ -64,11 +64,12 @@ namespace JavaToCSharp.Statements
             if (bodySyntax == null)
                 return null;
 
-            return SyntaxFactory.ForStatement(bodySyntax)
+            var statementSyntax = SyntaxFactory.ForStatement(bodySyntax)
                 .WithDeclaration(varSyntax)
                 .AddInitializers(initSyntaxes.ToArray())
                 .WithCondition(conditionSyntax)
                 .AddIncrementors(incrementSyntaxes.ToArray());
+            return statementSyntax;
         }
     }
 }

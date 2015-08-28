@@ -18,7 +18,8 @@ namespace JavaToCSharp.Statements
             if (bodySyntax == null)
                 return null;
 
-            return SyntaxFactory.WhileStatement(syntax, bodySyntax);
+            var statementSyntax = SyntaxFactory.WhileStatement(syntax, bodySyntax);
+            return statementSyntax;
         }
     }
 }
