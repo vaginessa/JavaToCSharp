@@ -170,6 +170,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comments\CommentVisitor.cs" />
+    <Compile Include="Comments\DocumentationCommentVisitor.cs" />
+    <Compile Include="Comments\Parsers\JavaDocParser.cs" />
+    <Compile Include="Comments\Parsers\JavaDocParameterParser.cs" />
+    <Compile Include="Comments\Syntax\JavaDoc.cs" />
+    <Compile Include="Comments\Syntax\JavaDocParameter.cs" />
+    <Compile Include="Comments\Syntax\JavaDocSyntaxToken.cs" />
     <Compile Include="ConversionContext.cs" />
     <Compile Include="ConversionState.cs" />
     <Compile Include="ConversionStateChangedEventArgs.cs" />
@@ -208,6 +215,7 @@
     <Compile Include="Expressions\ThisExpressionVisitor.cs" />
     <Compile Include="Expressions\TypeExpressionVisitor.cs" />
     <Compile Include="Expressions\UnaryExpressionVisitor.cs" />
+    <Compile Include="Extentions\StringExtentions.cs" />
     <Compile Include="IKVMHelpers.cs" />
     <Compile Include="JavaConversionOptions.cs" />
     <Compile Include="JavaToCSharpConverter.cs" />

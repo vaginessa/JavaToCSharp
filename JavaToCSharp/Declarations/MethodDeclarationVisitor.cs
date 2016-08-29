@@ -4,6 +4,7 @@ using com.github.javaparser.ast;
 using com.github.javaparser.ast.body;
 using com.github.javaparser.ast.expr;
 using com.github.javaparser.ast.stmt;
+using JavaToCSharp.Comments;
 using JavaToCSharp.Statements;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
@@ -23,6 +24,29 @@ namespace JavaToCSharp.Declarations
             methodName = TypeHelper.ReplaceCommonMethodNames(methodName);
 
             var methodSyntax = SyntaxFactory.MethodDeclaration(SyntaxFactory.ParseTypeName(returnTypeName), methodName);
+            
+            //var documentationComment = SyntaxFactory.DocumentationComment(
+            //    SyntaxFactory.XmlSummaryElement(
+            //        SyntaxFactory.XmlNewLine("\r\n"),
+            //        SyntaxFactory.XmlText("This class provides extension methods for the "),
+            //        SyntaxFactory.XmlSeeElement(
+            //            SyntaxFactory.TypeCref(SyntaxFactory.ParseTypeName("TypeName"))
+            //        ),
+            //        SyntaxFactory.XmlText(" class."),
+            //        SyntaxFactory.XmlNewLine("\r\n")
+            //    ),
+            //    SyntaxFactory.XmlNewLine("\r\n"),
+            //    SyntaxFactory.XmlThreadSafetyElement(),
+            //    SyntaxFactory.XmlNewLine("\r\n"),
+            //    SyntaxFactory.XmlPreliminaryElement()
+            //);
+
+            //var stuff = SyntaxFactory.ParseLeadingTrivia("/// <summary>Foo</summary>\r\n");
+
+
+            //methodSyntax = methodSyntax.WithLeadingTrivia(SyntaxFactory.TriviaList(SyntaxFactory.Trivia(documentationComment)));
+            //methodSyntax = methodSyntax.WithLeadingTrivia(stuff);
+
 
             var mods = methodDecl.getModifiers();
 
@@ -62,6 +86,8 @@ namespace JavaToCSharp.Declarations
                 && !isOverride
                 && !classSyntax.Modifiers.Any(i => i.Kind() == SyntaxKind.SealedKeyword))
                 methodSyntax = methodSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.VirtualKeyword));
+
+
 
             var parameters = methodDecl.getParameters().ToList<Parameter>();
 
@@ -128,6 +154,14 @@ namespace JavaToCSharp.Declarations
             else
             {
                 methodSyntax = methodSyntax.AddBodyStatements(statementSyntax.ToArray());
+            }
+
+            var comment = methodDecl.getComment();
+            if (comment != null)
+            {
+                var trivia = CommentVisitor.VisitComment(context, comment);
+                //methodSyntax = methodSyntax.WithLeadingTrivia(SyntaxFactory.Trivia(trivia));
+                methodSyntax = methodSyntax.WithLeadingTrivia(trivia);
             }
 
             return methodSyntax;
