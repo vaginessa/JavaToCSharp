@@ -170,8 +170,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Comments\BlockCommentVisitor.cs" />
     <Compile Include="Comments\CommentVisitor.cs" />
     <Compile Include="Comments\DocumentationCommentVisitor.cs" />
+    <Compile Include="Comments\LineCommentVisitor.cs" />
     <Compile Include="Comments\Parsers\JavaDocParser.cs" />
     <Compile Include="Comments\Parsers\JavaDocParameterParser.cs" />
     <Compile Include="Comments\Syntax\JavaDoc.cs" />

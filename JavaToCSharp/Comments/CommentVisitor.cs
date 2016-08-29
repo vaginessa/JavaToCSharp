@@ -23,7 +23,9 @@ namespace JavaToCSharp.Comments
         {
             CommentVisitor.visitors = new Dictionary<Type, CommentVisitor>
             {
-                { typeof(JavadocComment), new DocumentationCommentVisitor() }
+                [typeof(JavadocComment)] = new DocumentationCommentVisitor(),
+                [typeof(LineComment)] = new LineCommentVisitor(),
+                [typeof(BlockComment)] = new BlockCommentVisitor()
             };
         }
 

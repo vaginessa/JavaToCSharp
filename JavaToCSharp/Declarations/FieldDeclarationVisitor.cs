@@ -3,7 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using com.github.javaparser.ast;
 using com.github.javaparser.ast.body;
+using JavaToCSharp.Comments;
 using JavaToCSharp.Expressions;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -63,6 +65,13 @@ namespace JavaToCSharp.Declarations
                 fieldSyntax = fieldSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.ReadOnlyKeyword));
             if (mods.HasFlag(Modifier.VOLATILE))
                 fieldSyntax = fieldSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.VolatileKeyword));
+
+            var comment = fieldDecl.getComment();
+            if (comment != null)
+            {
+                var trivia = CommentVisitor.VisitComment(context, comment);
+                fieldSyntax = fieldSyntax.WithLeadingTrivia(trivia);
+            }
 
             return fieldSyntax;
         }

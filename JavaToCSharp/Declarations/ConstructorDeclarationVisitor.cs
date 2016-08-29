@@ -5,6 +5,7 @@ using com.github.javaparser.ast;
 using com.github.javaparser.ast.body;
 using com.github.javaparser.ast.expr;
 using com.github.javaparser.ast.stmt;
+using JavaToCSharp.Comments;
 using JavaToCSharp.Expressions;
 using JavaToCSharp.Statements;
 using Microsoft.CodeAnalysis;
@@ -95,7 +96,14 @@ namespace JavaToCSharp.Declarations
             var statementSyntax = StatementVisitor.VisitStatements(context, statements);
 
             ctorSyntax = ctorSyntax.AddBodyStatements(statementSyntax.ToArray());
-            
+
+            var comment = ctorDecl.getComment();
+            if (comment != null)
+            {
+                var trivia = CommentVisitor.VisitComment(context, comment);
+                ctorSyntax = ctorSyntax.WithLeadingTrivia(trivia);
+            }
+
             return ctorSyntax;
         }
 

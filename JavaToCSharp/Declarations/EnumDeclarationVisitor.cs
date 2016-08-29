@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using com.github.javaparser.ast;
 using com.github.javaparser.ast.body;
+using JavaToCSharp.Comments;
+using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
 
@@ -21,7 +23,16 @@ namespace JavaToCSharp.Declarations
             foreach (var entry in entries)
             {
                 // TODO: support "equals" value
-                memberSyntaxes.Add(SyntaxFactory.EnumMemberDeclaration(entry.getName()));
+                var memberSyntax = SyntaxFactory.EnumMemberDeclaration(entry.getName());
+
+                var memberComment = entry.getComment();
+                if (memberComment != null)
+                {
+                    var trivia = CommentVisitor.VisitComment(context, memberComment);
+                    memberSyntax = memberSyntax.WithLeadingTrivia(trivia);
+                }
+
+                memberSyntaxes.Add(memberSyntax);
             }
 
             if (members != null && members.Count > 0)
@@ -38,6 +49,13 @@ namespace JavaToCSharp.Declarations
                 enumSyntax = enumSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.ProtectedKeyword));
             if (mods.HasFlag(Modifier.PUBLIC))
                 enumSyntax = enumSyntax.AddModifiers(SyntaxFactory.Token(SyntaxKind.PublicKeyword));
+
+            var comment = enumDecl.getComment();
+            if (comment != null)
+            {
+                var trivia = CommentVisitor.VisitComment(context, comment);
+                enumSyntax = enumSyntax.WithLeadingTrivia(trivia);
+            }
 
             return enumSyntax;
         }
