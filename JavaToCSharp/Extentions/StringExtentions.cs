@@ -6,7 +6,7 @@ namespace System
     {
         public static IList<String> Lines(this String value)
         {
-            return value.Split(new[] { Environment.NewLine }, StringSplitOptions.None);
+            return value.Split(new[] { Environment.NewLine, "\n", "\r" }, StringSplitOptions.None);
         }
         
         public static String RemoveFirst(this String value, String find)
