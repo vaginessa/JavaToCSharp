@@ -224,10 +224,9 @@ namespace JavaToCSharp
 
             foreach (var member in members)
             {
-                if (member is ClassOrInterfaceDeclaration)
+                var childc = member as ClassOrInterfaceDeclaration;
+                if (childc != null)
                 {
-                    var childc = (ClassOrInterfaceDeclaration)member;
-
                     if (childc.isInterface())
                     {
                         var childInt = VisitInterfaceDeclaration(context, childc, true);

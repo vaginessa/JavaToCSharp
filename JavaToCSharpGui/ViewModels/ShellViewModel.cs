@@ -2,13 +2,9 @@ using Caliburn.Micro;
 using JavaToCSharp;
 using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.IO;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -16,7 +12,6 @@ namespace JavaToCSharpGui
 {
     public class ShellViewModel : Screen, IShell 
     {
-        private readonly ObservableCollection<string> _usings = new ObservableCollection<string>(new JavaConversionOptions().Usings);
         private string _addUsingInput;
         private string _javaText;
         private string _csharpText;
@@ -26,7 +21,7 @@ namespace JavaToCSharpGui
         private string _conversionState;
         private bool _includeUsings = true;
         private bool _includeNamespace = true;
-        private bool _useDebugAssertForAsserts = false;
+        private bool _useDebugAssertForAsserts;
 
         public ShellViewModel()
         {
@@ -37,14 +32,11 @@ namespace JavaToCSharpGui
             _useDebugAssertForAsserts = Properties.Settings.Default.UseDebugAssertPreference;
         }
 
-        public ObservableCollection<string> Usings
-        {
-            get { return _usings; }
-        }
+        public ObservableCollection<string> Usings { get; } = new ObservableCollection<string>(new JavaConversionOptions().Usings);
 
         public string AddUsingInput
         {
-            get { return _addUsingInput; }
+            get => _addUsingInput;
             set
             {
                 _addUsingInput = value;
@@ -54,7 +46,7 @@ namespace JavaToCSharpGui
 
         public string JavaText
         {
-            get { return _javaText; }
+            get => _javaText;
             set
             {
                 _javaText = value;
@@ -64,7 +56,7 @@ namespace JavaToCSharpGui
 
         public string CSharpText
         {
-            get { return _csharpText; }
+            get => _csharpText;
             set
             {
                 _csharpText = value;
@@ -74,7 +66,7 @@ namespace JavaToCSharpGui
 
         public string OpenPath
         {
-            get { return _openPath; }
+            get => _openPath;
             set
             {
                 _openPath = value;
@@ -84,7 +76,7 @@ namespace JavaToCSharpGui
 
         public string CopiedText
         {
-            get { return _copiedText; }
+            get => _copiedText;
             set
             {
                 _copiedText = value;
@@ -94,7 +86,7 @@ namespace JavaToCSharpGui
 
         public string ConversionStateLabel
         {
-            get { return _conversionState; }
+            get => _conversionState;
             set
             {
                 _conversionState = value;
@@ -104,7 +96,7 @@ namespace JavaToCSharpGui
 
         public bool IncludeUsings
         {
-            get { return _includeUsings; }
+            get => _includeUsings;
             set
             {
                 _includeUsings = value;
@@ -116,7 +108,7 @@ namespace JavaToCSharpGui
 
         public bool IncludeNamespace
         {
-            get { return _includeNamespace; }
+            get => _includeNamespace;
             set
             {
                 _includeNamespace = value;
@@ -128,7 +120,7 @@ namespace JavaToCSharpGui
 
         public bool UseDebugAssertForAsserts
         {
-            get { return _useDebugAssertForAsserts; }
+            get => _useDebugAssertForAsserts;
             set
             {
                 _useDebugAssertForAsserts = value;
@@ -136,7 +128,7 @@ namespace JavaToCSharpGui
                 Properties.Settings.Default.UseDebugAssertPreference = value;
                 Properties.Settings.Default.Save();
 
-                if (value && !_usings.Contains("System.Diagnostics"))
+                if (value && !Usings.Contains("System.Diagnostics"))
                 {
                     _addUsingInput = "System.Diagnostics";
                     AddUsing();
@@ -146,13 +138,13 @@ namespace JavaToCSharpGui
 
         public void AddUsing()
         {
-            _usings.Add(_addUsingInput);
+            Usings.Add(_addUsingInput);
             AddUsingInput = string.Empty;
         }
 
         public void RemoveUsing(string value)
         {
-            _usings.Remove(value);
+            Usings.Remove(value);
         }
 
         public void Convert()
@@ -160,7 +152,7 @@ namespace JavaToCSharpGui
             var options = new JavaConversionOptions();
             options.ClearUsings();
 
-            foreach (var ns in _usings)
+            foreach (var ns in Usings)
             {
                 options.AddUsing(ns);
             }
@@ -242,11 +234,6 @@ namespace JavaToCSharpGui
                 await Task.Delay(5000);
                 CopiedText = null;
             });
-        }
-
-        public void ForkMeOnGitHub()
-        {
-            UrlLauncher.UrlLauncher.LaunchUrl("http://www.github.com/paulirwin/javatocsharp");
         }
     }
 }

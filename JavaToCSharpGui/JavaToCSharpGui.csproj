@@ -208,7 +208,6 @@
     </ApplicationDefinition>
     <Compile Include="AppBootstrapper.cs" />
     <Compile Include="IShell.cs" />
-    <Compile Include="UrlLauncher\UrlLauncher.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="App.xaml.cs">
       <DependentUpon>App.xaml</DependentUpon>
@@ -252,14 +251,13 @@
       <Project>{edce2f7c-299e-4fea-870f-87c201fb2e43}</Project>
       <Name>JavaToCSharp</Name>
     </ProjectReference>
-    <ProjectReference Include="..\WebPageLauncher\WebPageLauncher.csproj">
-      <Project>{8c687ddf-1458-4918-b21e-e703dd971334}</Project>
-      <Name>WebPageLauncher</Name>
-    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <Resource Include="JavaToCSharpIcon.ico" />
     <Resource Include="JavaToCSharpIcon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="UrlLauncher\" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

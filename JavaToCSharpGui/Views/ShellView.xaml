@@ -21,11 +21,6 @@
         </ResourceDictionary>
 
     </Window.Resources>
-    <Controls:MetroWindow.WindowCommands>
-        <Controls:WindowCommands>
-            <Button x:Name="ForkMeOnGitHub" Micro:Message.Attach="[Event Click]=[Action ForkMeOnGitHub]">fork me on GitHub</Button>
-        </Controls:WindowCommands>
-    </Controls:MetroWindow.WindowCommands>
     <DockPanel>
         <StatusBar DockPanel.Dock="Bottom">
             <StatusBarItem>
