@@ -48,6 +48,7 @@ namespace JavaToCSharp.Expressions
                 { typeof(ThisExpr), new ThisExpressionVisitor() },
                 { typeof(UnaryExpr), new UnaryExpressionVisitor() },
                 { typeof(LongLiteralExpr), new LongLiteralExpressionVisitor() },
+                { typeof(LambdaExpr), new LambdaExpressionVisitor() },
             };
         }
 
