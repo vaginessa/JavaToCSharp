@@ -185,6 +185,7 @@
     <Compile Include="Expressions\ArrayInitializerExpressionVisitor.cs" />
     <Compile Include="Expressions\AssignmentExpressionVisitor.cs" />
     <Compile Include="Expressions\BinaryExpressionVisitor.cs" />
+    <Compile Include="Expressions\MethodReferenceExpressionVisitor.cs" />
     <Compile Include="Expressions\BooleanLiteralExpressionVisitor.cs" />
     <Compile Include="Expressions\CastExpressionVisitor.cs" />
     <Compile Include="Expressions\CharLiteralExpressionVisitor.cs" />
@@ -205,6 +206,7 @@
     <Compile Include="Expressions\StringLiteralExpressionVisitor.cs" />
     <Compile Include="Expressions\SuperExpressionVisitor.cs" />
     <Compile Include="Expressions\ThisExpressionVisitor.cs" />
+    <Compile Include="Expressions\TypeExpressionVisitor.cs" />
     <Compile Include="Expressions\UnaryExpressionVisitor.cs" />
     <Compile Include="IKVMHelpers.cs" />
     <Compile Include="JavaConversionOptions.cs" />

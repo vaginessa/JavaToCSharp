@@ -240,6 +240,10 @@ namespace JavaToCSharp
                         classSyntax = classSyntax.AddMembers(childClass);
                     }
                 }
+                else if (member is EmptyMemberDeclaration)
+                {
+                    context.Options.Warning("Empty Member Declaration will not be ported. Check for correctness.", member.getBegin().line);
+                }
                 else
                 {
                     var syntax = BodyDeclarationVisitor.VisitBodyDeclarationForClass(context, classSyntax, member);
@@ -251,6 +255,12 @@ namespace JavaToCSharp
                     var anon = context.PendingAnonymousTypes.Dequeue();
                     classSyntax = classSyntax.AddMembers(anon);
                 }
+            }
+
+            var comment = javac.getComment();
+            if (comment != null)
+            {
+                classSyntax = classSyntax.WithLeadingTrivia(SyntaxFactory.Comment(comment.toString()));
             }
 
             return classSyntax;

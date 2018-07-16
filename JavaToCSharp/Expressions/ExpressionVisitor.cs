@@ -40,6 +40,7 @@ namespace JavaToCSharp.Expressions
                 { typeof(InstanceOfExpr), new InstanceOfExpressionVisitor() },
                 { typeof(IntegerLiteralExpr), new IntegerLiteralExpressionVisitor() },
                 { typeof(MethodCallExpr), new MethodCallExpressionVisitor() },
+                { typeof(MethodReferenceExpr), new MethodReferenceExpressionVisitor() },
                 { typeof(NameExpr), new NameExpressionVisitor() },
                 { typeof(NullLiteralExpr), new NullLiteralExpressionVisitor() },
                 { typeof(ObjectCreationExpr), new ObjectCreationExpressionVisitor() },
@@ -49,6 +50,7 @@ namespace JavaToCSharp.Expressions
                 { typeof(UnaryExpr), new UnaryExpressionVisitor() },
                 { typeof(LongLiteralExpr), new LongLiteralExpressionVisitor() },
                 { typeof(LambdaExpr), new LambdaExpressionVisitor() },
+                { typeof(TypeExpr), new TypeExpressionVisitor() },
             };
         }
 
