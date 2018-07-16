@@ -48,17 +48,20 @@ namespace JavaToCSharpCli
             {
                 var directoryName = new FileInfo(file.Value).DirectoryName;
                 if (directoryName != null) Directory.CreateDirectory(directoryName);
-                var javaText = File.ReadAllText(file.Key);
+                if (!File.Exists(file.Value))
+                {
+                    var javaText = File.ReadAllText(file.Key);
 
-                try
-                {
-                    var parsed = JavaToCSharpConverter.ConvertText(javaText, options);
-                    File.WriteAllText(file.Value, parsed);
-                }
-                catch (Exception e)
-                {
-                    Console.WriteLine(e);
-                    Console.WriteLine($"Skipping file {file.Value} that would write to {file.Key}\n\n");
+                    try
+                    {
+                        var parsed = JavaToCSharpConverter.ConvertText(javaText, options);
+                        File.WriteAllText(file.Value, parsed);
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e);
+                        Console.WriteLine($"Skipping file {file.Value} that would write to {file.Key}\n\n");
+                    }
                 }
             }
         }
