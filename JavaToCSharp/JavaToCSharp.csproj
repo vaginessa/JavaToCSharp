@@ -220,6 +220,7 @@
     <Compile Include="Statements\ForEachStatementVisitor.cs" />
     <Compile Include="Statements\ForStatementVisitor.cs" />
     <Compile Include="Statements\IfStatementVisitor.cs" />
+    <Compile Include="Statements\EmptyStatementVisitor.cs" />
     <Compile Include="Statements\LabeledStatementVisitor.cs" />
     <Compile Include="Statements\ReturnStatementVisitor.cs" />
     <Compile Include="Statements\StatementVisitor.cs" />

@@ -30,6 +30,7 @@ namespace JavaToCSharp.Statements
                 { typeof(BreakStmt), new BreakStatementVisitor() },
                 { typeof(ContinueStmt), new ContinueStatementVisitor() },
                 { typeof(DoStmt), new DoStatementVisitor() },
+                { typeof(EmptyStmt), new EmptyStatementVisitor() },
                 { typeof(ExpressionStmt), new ExpressionStatementVisitor() },
                 { typeof(ForeachStmt), new ForEachStatementVisitor() },
                 { typeof(ForStmt), new ForStatementVisitor() },
@@ -55,7 +56,7 @@ namespace JavaToCSharp.Statements
 
             foreach (var statement in statements)
             {
-                StatementSyntax syntax = VisitStatement(context, statement);
+                var syntax = VisitStatement(context, statement);
 
                 if (syntax != null)
                     syntaxes.Add(syntax);
