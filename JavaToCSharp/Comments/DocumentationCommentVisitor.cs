@@ -3,6 +3,7 @@ using System.Linq;
 using System.Text;
 using com.github.javaparser.ast.comments;
 using JavaToCSharp.Comments.Parsers;
+using JavaToCSharp.Extensions;
 using Microsoft.CodeAnalysis;
 using Microsoft.CodeAnalysis.CSharp;
 

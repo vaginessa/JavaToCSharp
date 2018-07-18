@@ -217,7 +217,7 @@
     <Compile Include="Expressions\ThisExpressionVisitor.cs" />
     <Compile Include="Expressions\TypeExpressionVisitor.cs" />
     <Compile Include="Expressions\UnaryExpressionVisitor.cs" />
-    <Compile Include="Extentions\StringExtentions.cs" />
+    <Compile Include="Extensions\StringExtensions.cs" />
     <Compile Include="IKVMHelpers.cs" />
     <Compile Include="JavaConversionOptions.cs" />
     <Compile Include="JavaToCSharpConverter.cs" />

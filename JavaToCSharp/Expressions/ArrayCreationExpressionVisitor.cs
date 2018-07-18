@@ -26,14 +26,25 @@ namespace JavaToCSharp.Expressions
                     rankSyntaxes.Add(rankSyntax);
                 }
             }
-
+            var elementType = TypeHelper.GetTypeSyntax(type);
             if (initializer == null)
-                return SyntaxFactory.ArrayCreationExpression(SyntaxFactory.ArrayType(SyntaxFactory.ParseTypeName(type)))
+                return SyntaxFactory.ArrayCreationExpression(SyntaxFactory.ArrayType(elementType))
                     .AddTypeRankSpecifiers(SyntaxFactory.ArrayRankSpecifier(SyntaxFactory.SeparatedList(rankSyntaxes, Enumerable.Repeat(SyntaxFactory.Token(SyntaxKind.CommaToken), rankSyntaxes.Count - 1))));
 
             // todo: support multi-dimensional and jagged arrays
 
             var values = initializer.getValues().ToList<Expression>();
+
+            //// empty array
+            if (values.Count <= 0)
+            {
+                var rankSpecifiers = SyntaxFactory.SingletonList(SyntaxFactory.ArrayRankSpecifier(SyntaxFactory.SingletonSeparatedList<ExpressionSyntax>(SyntaxFactory.OmittedArraySizeExpression())));
+                var initializerExpression = SyntaxFactory.InitializerExpression(SyntaxKind.ArrayInitializerExpression);
+                var arrayCreationExpression = SyntaxFactory.ArrayCreationExpression(SyntaxFactory.ArrayType(SyntaxFactory.ArrayType(elementType))
+                    .WithRankSpecifiers(rankSpecifiers))
+                    .WithInitializer(initializerExpression);
+                return arrayCreationExpression;
+            }
 
             var syntaxes = new List<ExpressionSyntax>();
 
@@ -45,7 +56,7 @@ namespace JavaToCSharp.Expressions
 
             var initSyntax = SyntaxFactory.InitializerExpression(SyntaxKind.ArrayInitializerExpression, SyntaxFactory.SeparatedList(syntaxes, Enumerable.Repeat(SyntaxFactory.Token(SyntaxKind.CommaToken), syntaxes.Count - 1)));
 
-            return SyntaxFactory.ArrayCreationExpression(SyntaxFactory.ArrayType(SyntaxFactory.ParseTypeName(type)), initSyntax);
+            return SyntaxFactory.ArrayCreationExpression(SyntaxFactory.ArrayType(elementType), initSyntax);
         }
     }
 }

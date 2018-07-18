@@ -104,7 +104,7 @@ namespace JavaToCSharp
 
             typeName = ConvertType(typeName);
 
-            var typeArgs = type.getTypeArgs().ToList<com.github.javaparser.ast.type.Type>();
+            var typeArgs = type.getTypeArgs().ToList<Type>();
 
             TypeSyntax typeSyntax;
 
@@ -119,6 +119,16 @@ namespace JavaToCSharp
             }
 
             return typeSyntax;
+        }
+
+        public static TypeSyntax GetTypeSyntax(string type)
+        {
+            if (type.ToLowerInvariant() == "string")
+            {
+                return SyntaxFactory.PredefinedType(SyntaxFactory.Token(SyntaxKind.StringKeyword));
+            }
+
+            return SyntaxFactory.ParseTypeName(type);
         }
     }
 }

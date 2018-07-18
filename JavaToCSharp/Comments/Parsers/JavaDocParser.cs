@@ -2,6 +2,7 @@ using System;
 using System.Text;
 using com.github.javaparser.ast.comments;
 using JavaToCSharp.Comments.Syntax;
+using JavaToCSharp.Extensions;
 
 namespace JavaToCSharp.Comments.Parsers
 {
